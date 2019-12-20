@@ -1,10 +1,15 @@
 #include <iostream>
-#include <stdio.h>
-#include <sys/wait.h>
 #include <unistd.h>
-
 #include "samson.h"
 
+/**
+ * Spawn process passing arguments.
+ *
+ * @param function - Main process entry function.
+ * @param argc - Count of arguments in argv array.
+ * @param argv - Array of pointers to arguments.
+ * @return Process ID of child process.
+ */
 pid_t start_process(PROCFUNC function, int argc, char * argv[]) {
     pid_t   proc_id = -1;
 

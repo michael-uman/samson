@@ -3,7 +3,7 @@
  */
 
 #include <iostream>
-#include <stdio.h>
+#include <cstdio>
 #include <sys/wait.h>
 #include <unistd.h>
 #include "samson.h"
@@ -11,6 +11,8 @@
 
 int processEntry(int argc, char * argv[]) {
     fprintf(stderr, "from child\n");
+
+    srand(time(nullptr));
 
     int * data = nullptr;
 //    *data = 10;
@@ -22,7 +24,7 @@ int processEntry(int argc, char * argv[]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
     while (true) {
-        if ((rand() % 12) == 4) {
+        if ((rand() % 10) == 4) {
             fprintf(stderr, "Going down for the count...\n");
             *data = 10;
         }
@@ -40,8 +42,6 @@ int main(int argc, char * argv[]) {
     pid_t   procId = 0;
     int     status = -1;
     bool    exitOk = false;
-
-    srand(time(0L));
 
     std::cout << "Hello, World!" << std::endl;
 
