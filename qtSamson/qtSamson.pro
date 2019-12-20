@@ -18,11 +18,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    samson.cpp
+    ../samson.cpp
 
 HEADERS += \
     mainwindow.h \
-    samson.h
+    ../samson.h
 
 FORMS += \
     mainwindow.ui

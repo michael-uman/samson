@@ -6,60 +6,53 @@
 #include <cstdio>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <string.h>
 #include "samson.h"
 
-
+/**
+ * Process Entry
+ *
+ * If '--sleep' is passed as the 1st argument just sleep and return a value.
+ *
+ * @param argc
+ * @param argv
+ * @return
+ */
 int processEntry(int argc, char * argv[]) {
+    bool bSleep = false;
+
     fprintf(stderr, "from child\n");
+
+    if ((argc == 2) && (strcmp(argv[1], "--sleep") == 0)) {
+        bSleep = true;
+    }
 
     srand(time(nullptr));
 
-    int * data = nullptr;
-//    *data = 10;
-
-#ifdef DO_SLEEP
-    fprintf(stderr, "Sleeping...\n");
-    sleep(5);
-#else // DO_SLEEP
+    if (bSleep) {
+        fprintf(stderr, "Sleeping...\n");
+        sleep(5);
+    } else {
+        int * data = nullptr;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
-    while (true) {
-        if ((rand() % 10) == 4) {
-            fprintf(stderr, "Going down for the count...\n");
-            *data = 10;
-        }
+        while (true) {
+            if ((rand() % 10) == 4) {
+                fprintf(stderr, "Going down for the count...\n");
+                *data = 10;
+            }
 
-        fprintf(stderr, "From child!\n");
-        sleep(2);
-    }
+            fprintf(stderr, "From child!\n");
+            sleep(2);
+        }
 #pragma clang diagnostic pop
-#endif // DO_SLEEP
+    }
 
     return 20;
 }
 
 int main(int argc, char * argv[]) {
-    pid_t   procId = 0;
-    int     status = -1;
-    bool    exitOk = false;
-
     std::cout << "Hello, World!" << std::endl;
 
-    while (!exitOk) {
-        procId = start_process(processEntry, argc, argv);
-
-        printf("From parent (Child pid = %d)!\n", procId);
-
-        waitpid(procId, &status, 0);
-
-        if (WIFEXITED(status)) {
-            printf("Child returned status %d\n", WEXITSTATUS(status));
-            exitOk = true;
-        } else if (WIFSIGNALED(status)) {
-            printf("Child exited with signal %d\n", WTERMSIG(status));
-            printf("RESTARTING!\n");
-        }
-    }
-
-    return 0;
+    return keep_alive(processEntry, argc, argv);
 }
