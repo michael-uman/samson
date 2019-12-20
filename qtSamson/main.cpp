@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <unistd.h>
 #include <sys/wait.h>
-#include "../samson.h"
+#include "samson.h"
 
 int qt_main(int argc, char *argv[]);
 
