@@ -1,23 +1,13 @@
+/**
+ * Samson - Respawn process when it segfaults.
+ */
+
 #include <iostream>
 #include <stdio.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include "samson.h"
 
-
-typedef int (*PROCFUNC)(int, char **);
-
-
-pid_t start_process(PROCFUNC function, int argc, char * argv[]) {
-    pid_t   proc_id = -1;
-
-    if ((proc_id = fork()) == 0L) {
-        return function(argc, argv);
-    }
-
-    fprintf(stderr, "Child pid : %d\n", proc_id);
-
-    return proc_id;
-}
 
 int processEntry(int argc, char * argv[]) {
     fprintf(stderr, "from child\n");
@@ -25,10 +15,14 @@ int processEntry(int argc, char * argv[]) {
     int * data = nullptr;
 //    *data = 10;
 
+#ifdef DO_SLEEP
+    fprintf(stderr, "Sleeping...\n");
+    sleep(5);
+#else // DO_SLEEP
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
     while (true) {
-        if ((rand() % 8) == 4) {
+        if ((rand() % 12) == 4) {
             fprintf(stderr, "Going down for the count...\n");
             *data = 10;
         }
@@ -37,8 +31,9 @@ int processEntry(int argc, char * argv[]) {
         sleep(2);
     }
 #pragma clang diagnostic pop
+#endif // DO_SLEEP
 
-    return 10;
+    return 20;
 }
 
 int main(int argc, char * argv[]) {
