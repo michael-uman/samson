@@ -77,3 +77,6 @@ From parent (Child pid = 16752)!
 .
 .
 ```
+## Qt Example
+
+The `qtSamson` directory contains a Qt Widgets application which is started using the `samson` library. The application opens a single window with a menu. The single menu item will cause the application to segfault by attempting to write to the null address. Upon crashing the application will restart immediately.
