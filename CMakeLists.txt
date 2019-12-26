@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.15)
 project(samson)
-
 set(CMAKE_CXX_STANDARD 14)
+
 add_subdirectory(samsonlib)
 add_subdirectory(examples)
-add_subdirectory(qtSamson)
+if (DEFINED ENV{Qt5_DIR})
+    add_subdirectory(qtSamson)
+endif()
