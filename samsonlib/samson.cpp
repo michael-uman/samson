@@ -6,6 +6,13 @@
 #include <QDebug>
 #endif
 
+static int _crashCount = 0;
+
+
+int get_crash_count() {
+    return _crashCount;
+}
+
 /**
  * Spawn process passing arguments.
  *
@@ -59,6 +66,7 @@ int     keep_alive(PROCFUNC processEntry, int argc, char * argv[]) {
 #endif
             exitOk = true;
         } else if (WIFSIGNALED(status)) {
+            _crashCount++;
 #ifdef QT_CORE_LIB
             qDebug().noquote() << QString("Child exited with signal %1").arg(WTERMSIG(status));
 #else

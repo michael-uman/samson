@@ -13,6 +13,7 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 add_executable(qtSamson
         mainwindow.h
         mainwindow.cpp
+	mainwindow.ui
         main.cpp)
 
 include_directories(../samsonlib)

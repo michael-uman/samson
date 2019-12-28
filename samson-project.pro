@@ -1,6 +1,8 @@
 TEMPLATE = subdirs
 
 SUBDIRS +=  samsonlib \
-            qtSamson
+            qtSamson \
+            qmlSamson
 
 qtSamson.depends = samsonlib
+qmlSamson.depends = samsonlib
