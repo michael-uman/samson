@@ -9,6 +9,12 @@
 static int _crashCount = 0;
 
 
+/**
+ * Get the # of times samson has restarted app.
+ *
+ * @return Count of crashes.
+ */
+
 int get_crash_count() {
     return _crashCount;
 }

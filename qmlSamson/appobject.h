@@ -8,7 +8,10 @@ class appObject : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(int crashCount READ crashCount WRITE setCrashCount NOTIFY crashCountChanged)
+    Q_PROPERTY(int crashCount
+               READ crashCount
+               WRITE setCrashCount
+               NOTIFY crashCountChanged)
 
 public:
     explicit appObject(QObject *parent = nullptr);
